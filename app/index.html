@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html ng-app="weatherApp">
   <head>
     <meta charset="utf-8">
     <title>sky_app</title>
@@ -22,77 +22,65 @@
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="/bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
-
   </head>
 
-  <body>
+  <body ng-controller="weatherCtrl">
+    <div class="etc">
 
-    <div class="container"> 
+      <div class="container"> 
+        <!-- Jumbotron -->
+        <div class="jumbotron">
+          <img src="images/logo.png" class="logo">
+        </div>
 
-      <!-- Jumbotron -->
-      <div class="jumbotron">
-        <img src="images/logo.png">
-      </div>
+        <!-- Weather Search -->
+        <div class="jumbotron searchWeather">
+          <div class="wrapper">
+            <input class="weatherSearch" ng-model="zip" type="text" placeholder="Enter Zip Code">
+          </div>
+          <button class="searchButton" type="button" ng-click="findWeather(zip);findNews(cityState)">Get Weather</button>
+        </div>
 
-      <!-- Current Conditions -->
+
+        <!-- Current Conditions -->
+          <div class="jumbotron fiveDayWrapper currentConditions" ng-show="place.item.condition.text">
+            <div class="wrapper">
+              <div class="wIcon">
+                <img src="images/icons/{{place.item.condition.code}}.png"/>
+              </div>
+              <h3>Current Conditions for {{place.location.city}}, <span class="city">{{place.location.region}}<span></h3>
+              <h2>{{ place.item.condition.text }} | {{ place.item.condition.temp }} <img src="images/icons/icon-degree.png" class="degree"> </h2>
+            </div>   
+          </div>
+   
+
+        <!-- 5 Day Forcast -->
+        <div class="row-fluid fiveDayWrapper" ng-show="place.item.condition.text">
+          <div class="wrapper">
+            <div class="span2" ng-repeat="forecast in place.item.forecast">
+              <h2><img style="width:50px;height:auto;" src="images/icons/{{place.item.condition.code}}.png"></h2>
+              <p><strong>{{ forecast.date }}</strong></p>
+              <p>{{ forecast.text }}</p>
+              <p>H: {{ forecast.high }}° | L: {{ forecast.low }}°</p>
+            </div>
+          </div>
+        </div>
+
       
-        <div class="jumbotron fiveDayWrapper currentConditions">
-          <h2>Current Conditions</h2>
-          <h2><img style="width:100px;height:auto;" src="images/icons/icon-sunny.png">
-              <img style="width:100px;height:auto;" src="images/icons/icon-cloudy.png">
-              <img style="width:100px;height:auto;" src="images/icons/icon-partly_sunny.png">
-              <img style="width:35px;height:auto;" src="images/icons/icon-degree.png">
-          </h2>
-          <p>High: 80</p>
-          <p>Low: 65</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          anim id est laborum.</p>
-        </div>
- 
 
-      <!-- 5 Day Forcast -->
-      <div class="row-fluid fiveDayWrapper">
-      
-        <div class="span2">
-          <h2><img style="width:50px;height:auto;" src="images/icons/icon-sunny.png"></h2>
-          <p>High: 80</p>
-          <p>Low: 65</p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
-        </div>
-        <div class="span2">
-          <h2><img style="width:50px;height:auto;" src="images/icons/icon-cloudy.png"></h2>
-         <p>High: 85</p>
-          <p>Low: 62</p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
-       </div>
-        <div class="span2">
-          <h2><img style="width:50px;height:auto;" src="images/icons/icon-partly_sunny.png"></h2>
-          <p>High: 90</p>
-          <p>Low: 70</p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
-        </div>
-        <div class="span2">
-          <h2><img style="width:50px;height:auto;" src="images/icons/icon-partly_sunny.png"></h2>
-          <p>High: 84</p>
-          <p>Low: 69</p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
-        </div>
-        <div class="span2">
-          <h2><img style="width:50px;height:auto;" src="images/icons/icon-sunny.png"></h2>
-         <p>High: 88</p>
-          <p>Low: 70</p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
-        </div>
-      </div>
-
-
-    
       <div class="footer">
-        <p>&copy; Company 2013</p>
+        <p>&copy; 2015. <a href="http://thinkclearstudios.com">Think Clear Studio</a> Production.</p>
       </div>
 
-    </div> <!-- /container -->
+    </div> <!-- /container -->    
+ </div>
+
+  <script src="scripts/jquery.js"></script>
+  <!-- Angular JS -->
+   <script data-require="angular.js@1.2.x" src="https://code.angularjs.org/1.2.16/angular.js" data-semver="1.2.16"></script>
+
+   <script src="scripts/weather.js"></script>
+  
+
   </body>
 </html>
